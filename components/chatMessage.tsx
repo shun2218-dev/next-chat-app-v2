@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, memo } from 'react';
+import  { useState, useEffect, FC, memo } from 'react';
 import { useSmoothScroll } from 'hooks/useSmoothScroll';
 import { useAuthUser } from '@/hooks/useAuthUser';
 import { Skeleton } from '@mui/material';
@@ -30,7 +30,6 @@ const ChatMessage: FC<Message> = memo(function ChatMessage({
   isLastMessage,
   image,
 }) {
-  // const { uid, partnerid, groupid } = useParams();
   const { authUser } = useAuthUser();
   const [userInfo, setUserInfo] = useState<Info>({
     displayName: '',
@@ -41,34 +40,6 @@ const ChatMessage: FC<Message> = memo(function ChatMessage({
   useEffect(() => {
     smoothScroll(chatRef);
   }, [chatRef, smoothScroll]);
-  // const [partnerName, setPartnerName] = useState("");
-  // const [partnerPhoto, setPartnerPhoto] = useState("");
-
-  // const getPartnerInfo = async (partnerid: string) => {
-  //   const userRef = doc(db, "users", partnerid);
-  //   const snapshot = await getDoc(userRef);
-  //   return {
-  //     displayName: snapshot.data()!.displayName,
-  //     photoURL: snapshot.data()!.photoURL,
-  //   };
-  // };
-
-  // const getFromInfo = async (from: string, groupid: string) => {
-  //   const fromRef = doc(db, "groups", groupid, "members", from);
-  //   const snapshot = await getDoc(fromRef);
-  //   if (snapshot.data()) {
-  //     return {
-  //       displayName: snapshot?.data()?.displayName,
-  //       photoURL: snapshot?.data()?.photoURL,
-  //     };
-  //   } else {
-  //     return {
-  //       displayName: "Unknown",
-  //       photoURL: snapshot?.data()?.photoURL,
-  //     };
-  //   }
-  // };
-
   useEffect(() => {
     getUserInfo(from).then((user) => {
       if (user) {
@@ -83,18 +54,6 @@ const ChatMessage: FC<Message> = memo(function ChatMessage({
         });
       }
     });
-    // Set Unknown user if the user is existed.
-    // if (partnerid) {
-    //   getPartnerInfo(partnerid).then(({ displayName, photoURL }) => {
-    //     setPartnerName(displayName);
-    //     setPartnerPhoto(photoURL);
-    //   });
-    // } else if (groupid) {
-    //   getFromInfo(from, groupid).then(({ displayName, photoURL }) => {
-    //     setPartnerName(displayName);
-    //     setPartnerPhoto(photoURL);
-    //   });
-    // }
   }, [from]);
 
   return (
@@ -107,58 +66,78 @@ const ChatMessage: FC<Message> = memo(function ChatMessage({
           isLastMessage={isLastMessage}
         />
       ) : from === authUser?.uid ? (
-        <ul className={[styles.message, styles.own].join(' ')} ref={chatRef}>
-          <li className={styles.text}>
-            <p className={styles.bubble}>{message}</p>
-            {createdAt !== null && (
-              <p className={styles.time}>{formatTime(createdAt)}</p>
-            )}
-          </li>
+        <li className={[styles.message, styles.own].join(' ')} ref={chatRef}>
+          {
+            message !== "" && (
+            <div className={styles.text}>
+              <p className={styles.bubble}>{message}</p>
+              {createdAt !== null && (
+                <p className={styles.time}>{formatTime(createdAt)}</p>
+              )}
+            </div>
+            )
+          }
           {image && (
-            <li className={styles.chatImage}>
-              <Image src={image} alt="" width={200} height={150} />
-            </li>
+            <div className={styles.chatImage}>
+              <Image
+                src={image}
+                alt=""
+                width={200}
+                height={150}
+                priority={true}
+                style={{objectFit: "cover"}}
+              />
+              {createdAt !== null && (
+              <p className={styles.time}>{formatTime(createdAt)}</p>
+              )}
+            </div>
           )}
-        </ul>
+        </li>
       ) : (
-        <ul
+        <li
           className={[styles.message, styles.partner].join(' ')}
           ref={chatRef}
         >
-          <li className={styles.profile}>
+          <div className={styles.profile}>
             {userInfo.photoURL ? (
               <Avatar size={40} storageRef={userInfo.photoURL} chat />
             ) : (
               <AccountCircleIcon sx={{ width: '40px', height: '40px' }} />
-              // <div>Account Circle</div>
             )}
             <p>
               {userInfo.displayName !== undefined
                 ? userInfo.displayName
                 : 'Unknown'}
             </p>
-          </li>
-          <li className={styles.text}>
-            <p className={styles.bubble}>{message}</p>
-            {createdAt !== null ? (
+          </div>
+          {
+            message !== "" && (
+            <div className={styles.text}>
+              <p className={styles.bubble}>{message}</p>
+              {createdAt !== null ? (
               <p className={styles.time}>{formatTime(createdAt)}</p>
-            ) : (
+              ) : (
               <Skeleton variant="text" width={40} height={24} />
-              // <div>loading...</div>
-            )}
-          </li>
+              )}
+            </div>
+            )
+          }
           {image && (
-            <li className={styles.chatImage}>
+            <div className={styles.chatImage}>
               <Image
                 src={image}
                 alt=""
                 width={250}
                 height={150}
                 priority={true}
+                style={{objectFit: "cover"}}
               />
-            </li>
+              {createdAt !== null && (
+                <p className={styles.time}>{formatTime(createdAt)}</p>
+              )}
+            </div>
           )}
-        </ul>
+        </li>
       )}
     </>
   );

@@ -1,5 +1,4 @@
 "use client";
-import { Suspense } from "react";
 import { PageParam } from "@/types/PageParam";
 import UserList from "@/components/userList";
 

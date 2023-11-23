@@ -27,6 +27,7 @@ const InviteModal: FC<CustomModal> = memo(function InviteModalMemo({
   inviteUsers,
   inviteIds,
   setInviteIds,
+  isLoading
 }) {
   const { uid, groupid } = params;
   const [loading, setLoading] = useState(false);
@@ -78,50 +79,58 @@ const InviteModal: FC<CustomModal> = memo(function InviteModalMemo({
   return (
     <Modal title="Select the member to invite" open={open} onSubmit={onSubmit}>
       <ul className={[styles.userList, styles.invite].join(" ")}>
-        {inviteUsers!.length ? (
-          inviteUsers!.map((user) => (
-            <label key={user.id} className={styles.label}>
-              <li
-                className={[styles.user, styles.passive].join(" ")}
-                onClick={() => {}}
-              >
-                <input
-                  type="checkbox"
-                  name=""
-                  id=""
-                  value={user.id}
-                  onChange={onChange}
-                />
-                {user.data().photoURL ? (
-                  <Image
-                    src={user.data().photoURL}
-                    alt=""
-                    className={utilStyles.avatar}
-                    width={60}
-                    height={60}
-                  />
-                ) : (
-                  <AccountCircleIcon
-                    sx={{
-                      width: 60,
-                      height: 60,
-                      "@media screen and (max-width:1000px)": {
-                        width: 40,
-                        height: 40,
-                      },
-                    }}
-                  />
-                )}
-                <p>
-                  {user.data().displayName
-                    ? user.data().displayName
-                    : "Unknown"}
-                </p>
-              </li>
-            </label>
-          ))
+        {isLoading ? (
+                  <div style={{width: "100%"}}>
+                    <div className="loader"></div>
+                  </div>
         ) : (
-          <div>...loading</div>
+          inviteUsers!.length ? (
+            inviteUsers!.map((user) => (
+              <label key={user.id} className={styles.label}>
+                <li
+                  className={[styles.user, styles.passive].join(" ")}
+                  onClick={() => {}}
+                >
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    value={user.id}
+                    onChange={onChange}
+                  />
+                  {user.data().photoURL ? (
+                    <Image
+                      src={user.data().photoURL}
+                      alt=""
+                      className={utilStyles.avatar}
+                      width={60}
+                      height={60}
+                    />
+                  ) : (
+                    <AccountCircleIcon
+                      sx={{
+                        width: 60,
+                        height: 60,
+                        "@media screen and (max-width:1000px)": {
+                          width: 40,
+                          height: 40,
+                        },
+                      }}
+                    />
+                  )}
+                  <p>
+                    {user.data().displayName
+                      ? user.data().displayName
+                      : "Unknown"}
+                  </p>
+                </li>
+              </label>
+            ))
+          ) : (
+            <div style={{height: "100%", width: "100%"}}>
+              <p>There isn't any member you can invite.</p>
+            </div>
+          )
         )}
       </ul>
       <div className={styles.modalButton}>
@@ -130,7 +139,7 @@ const InviteModal: FC<CustomModal> = memo(function InviteModalMemo({
           color="primary"
           variant="contained"
           fullWidth
-          disabled={loading}
+          disabled={loading || isLoading || !inviteUsers?.length}
         >
           Invite New Members
         </Button>

@@ -53,6 +53,17 @@ $partner-bg: var.$primary;
     display: flex;
     flex-direction: row-reverse;
   }
+  & .chatImage {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+    gap: 15px;
+    padding: 1em 0;
+    justify-content: flex-start;
+    & .time {
+      margin: 0;
+    }
+  }
 }
 
 .partner {

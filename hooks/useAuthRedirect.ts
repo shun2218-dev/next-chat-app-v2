@@ -16,9 +16,7 @@ export const useAuthRedirect = () => {
       toLogin();
     }
   }, [
-    authUser?.displayName,
-    authUser?.photoURL,
-    authUser?.uid,
+    authUser,
     toHome,
     toLogin,
     toProfile,

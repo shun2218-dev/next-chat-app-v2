@@ -53,8 +53,9 @@ const UserList: FC<Props> = memo(function UserListMemo({
   const [allUsers, setAllUsers] = useState<FirebaseData[]>([]);
   const [users, setUsers] = useState<FirebaseData[]>([]);
   const [inviteUsers, setInviteUsers] = useState<FirebaseData[]>([]);
-  const [inviteLists, setInviteLists] = useState<FirebaseData[]>([]);
+  const [inviteLists, setInviteLists] = useState<FirebaseData[]>([]);  
   const [inviteOpen, setInviteOpen] = useState(false);
+  const [inviteIsLoading, setInviteIsLoading] = useState(false)
   const [exitOpen, setExitOpen] = useState(false);
   const [joinOpen, setJoinOpen] = useState(false);
   const [cancelOpen, setCancelOpen] = useState(false);
@@ -135,6 +136,7 @@ const UserList: FC<Props> = memo(function UserListMemo({
   }, [group, roomId]);
 
   useEffect(() => {
+    setInviteIsLoading(true)
     const notMembers = allUsers.filter(
       (user) => ids.includes(user.id) === false
     );
@@ -142,6 +144,7 @@ const UserList: FC<Props> = memo(function UserListMemo({
       (member) => inviteIds.includes(member.id) === false
     );
     setInviteUsers([...notInvited]);
+    setInviteIsLoading(false)
   }, [allUsers]);
 
   useEffect(() => {
@@ -166,8 +169,9 @@ const UserList: FC<Props> = memo(function UserListMemo({
         inviteUsers={inviteUsers}
         inviteIds={inviteIds}
         setInviteIds={setInviteIds}
+        isLoading={inviteIsLoading}
       />
-      <ExitModal params={params} open={exitOpen} modalToggle={modalToggle} />
+      <ExitModal params={params} open={exitOpen} modalToggle={modalToggle}  />
       <CancelModal
         params={params}
         open={cancelOpen}

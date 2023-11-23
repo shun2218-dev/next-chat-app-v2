@@ -22,6 +22,7 @@ export const useChatMessage = (
   const [loading, setLoading] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
   const [roomExist, setRoomExist] = useState(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const messageOptions = [orderBy("createdAt", "asc")];
 
   const { uid, partnerid, groupid } = pageParams;
@@ -34,6 +35,7 @@ export const useChatMessage = (
       });
       return roomid;
     };
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (chatRoom) {
         const q = query(
@@ -51,8 +53,10 @@ export const useChatMessage = (
           unSub();
         };
       }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chatRoom]);
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (partnerid) {
         setDataLoading(true);
@@ -87,8 +91,10 @@ export const useChatMessage = (
           unSubUser();
         };
       }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageParams]);
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (partnerid) {
         setChatMessages([]);
@@ -98,12 +104,14 @@ export const useChatMessage = (
       if (!roomExist) {
         setChatRoom("");
       }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageParams]);
   } else {
     const q = query(
       collection(db, "groups", groupid!, "messages"),
       ...messageOptions
     );
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       const unSub = onSnapshot(q, (snapshot) => {
         setChatMessages([
@@ -115,6 +123,7 @@ export const useChatMessage = (
       return () => {
         unSub();
       };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   }
   return {

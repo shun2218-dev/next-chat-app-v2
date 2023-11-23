@@ -8,14 +8,11 @@ import isCreatedRoom from '@/utils/private/isCreatedRoom';
 import {
   addDoc,
   collection,
-  doc,
-  serverTimestamp,
-  updateDoc,
+  serverTimestamp,  
 } from 'firebase/firestore';
-import { db, storage } from '@/firebase';
+import { db } from '@/firebase';
 import NotFoundIcon from '@/icons/notFoundIcon';
 import { useTransition } from 'react';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { uploadChatImage } from '@/utils/uploadChatImage';
 
 export default function PrivateChatLayout({
@@ -88,14 +85,15 @@ export default function PrivateChatLayout({
         setNotHistory(false);
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataLoading]);
   return (
     <>
       <div className={styles.chatRoom}>
         {dataLoading ? (
-          <div className={styles.load}>
-            {/* <CircularProgress /> */}
-            <p>loading...</p>
+          <div>
+            <div className="loader"></div>
+            <p style={{textAlign: "center"}}>loading...</p>
           </div>
         ) : chatMessages.length === 0 ? (
           notHistory && (

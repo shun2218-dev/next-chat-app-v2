@@ -14,15 +14,13 @@ export default function Error({ error }: { error: Error }) {
     } else {
       toHome(authUser.uid);
     }
-  }, []);
+  }, [toHome, toStart]);
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error(error);
-    console.log(error.message);
   }, [error]);
 
   return (
-    <div>
+    <div style={{display: "flex", flexDirection: "column"}}>
       <h2>Something Error!</h2>
       <button onClick={() => onClick(state)}>Back to Top</button>
     </div>

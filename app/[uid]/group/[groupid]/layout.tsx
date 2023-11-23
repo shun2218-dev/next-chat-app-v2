@@ -78,13 +78,13 @@ export default function GroupChatLayout({
         setNotHistory(false);
       });
     }
-  }, [dataLoading]);
+  }, [chatMessages, chatRoom, dataLoading]);
   return (
     <>
       <UserList params={params} group />
       <div className={styles.chatRoom}>
         {dataLoading ? (
-          <div className={styles.load}>
+          <div className="loader">
             {/* <CircularProgress /> */}
             <p>loading...</p>
           </div>
