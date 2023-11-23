@@ -1,0 +1,48 @@
+@use "../config/variables" as var;
+
+.input {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 10px;
+  width: 100%;
+  width: 500px;
+  // font-family: var(--font-caveat), "Yuji Mai", serif;
+  font-family: so-lovely, "Yuji Mai", serif;
+  & textarea {
+    padding: 10px;
+    resize: none;
+    height: 104px;
+    background-color: var.$font-color;
+    color: var.$black;
+    padding: 10px 10px;
+    border: 5px solid var.$font-color;
+    // border-radius: 6px;
+    // font-family: var(--font-caveat), "Yuji Mai", serif;
+    font-family: so-lovely, "Yuji Mai", serif;
+    &::placeholder {
+      // font-family: var(--font-caveat), "Yuji Mai", serif;
+      font-family: so-lovely, "Yuji Mai", serif;
+    }
+    &:focus {
+      border: 5px solid var.$primary;
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    width: 330px;
+    font-size: 0.8rem;
+    & textarea {
+      box-sizing: border-box;
+      font-size: 0.8rem;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    width: 250px;
+    font-size: 0.7rem;
+    & textarea {
+      box-sizing: border-box;
+      font-size: 0.7rem;
+    }
+  }
+}
