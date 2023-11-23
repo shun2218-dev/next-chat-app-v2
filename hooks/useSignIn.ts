@@ -12,7 +12,7 @@ import { useAuthUserStore } from "@/atoms/useAuthUserStore";
 export function useSignIn() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
-  const { toHome, toRedirect } = usePage();
+  const { toRedirect } = usePage();
   const reducer = useAuthUserStore((state) => state.reducer);
 
   // eslint-disable-next-line max-len
@@ -22,13 +22,6 @@ export function useSignIn() {
       async () => {
         return await signInWithEmailAndPassword(auth, email, password)
           .then((res) => {
-            // if (res.user.uid) {
-            //   toHome(res.user.uid, {
-            //     title: "Success",
-            //     status: "success",
-            //     text: "Login succeeded.",
-            //   });
-            // }
             const { user } = res;
             const authUser = {
               uid: user.uid,
@@ -37,7 +30,6 @@ export function useSignIn() {
               photoURL: user.photoURL,
             };
             reducer(authUser);
-            console.log("login successful");
           })
           .catch((e) => {
             setError(e instanceof Error ? e : Error("unecpected error!"));

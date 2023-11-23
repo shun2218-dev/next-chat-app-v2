@@ -43,3 +43,4 @@ next-env.d.ts
 # cypress
 cypress.dev.json
 cypress.dev.config.ts
+.vercel

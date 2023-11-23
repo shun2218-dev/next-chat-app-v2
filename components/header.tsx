@@ -20,7 +20,7 @@ const Header: FC<Props> = memo(function HeaderMemo({ children }) {
   const { toProfile } = usePage();
   const pathname = usePathname();
   const authUser = useAuthUserStore((state) => state.authUser);
-  const [isPending, startTransition] = useTransition();
+  const [isPending] = useTransition();
   const { signOut, error, loading } = useSignOut();
   const isLoginStyle = useMemo(
     () => (authUser?.uid ? styles.login : styles.notLogin),
@@ -31,9 +31,7 @@ const Header: FC<Props> = memo(function HeaderMemo({ children }) {
     <>
       {pathname !== '/start' && pathname !== '/' && (
         <header className={[styles.header, isLoginStyle].join(' ')}>
-          {/* after log in switch toHome */}
           <HeaderLogo />
-
           {authUser && !isPending && (
             <div className={styles.profile}>
               <p>{authUser.displayName}</p>
@@ -58,7 +56,6 @@ const Header: FC<Props> = memo(function HeaderMemo({ children }) {
                   }}
                   onClick={() => toProfile(authUser?.uid)}
                 />
-                // <div>Account CirCle</div>
               )}
               <Button
                 testid="signout-btn"
@@ -70,7 +67,7 @@ const Header: FC<Props> = memo(function HeaderMemo({ children }) {
                     await signOut();
                   } catch (err: any) {
                     if (error) {
-                      console.log(error.message);
+                      console.error(error.message);
                     }
                   }
                 }}

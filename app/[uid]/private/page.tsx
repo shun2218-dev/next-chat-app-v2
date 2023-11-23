@@ -17,9 +17,9 @@ const PrivateRoom: FC<Props> = memo(function PrivateRoomMemo({ params }) {
       const firstUserId = users[0].data().uid;
       router.push(`/${uid}/private/${firstUserId}`);
     });
-  }, []);
+  }, [router, uid]);
 
-  return <div>loading...</div>;
+  return <div><p>loading...</p></div>;
 });
 
 export default PrivateRoom;

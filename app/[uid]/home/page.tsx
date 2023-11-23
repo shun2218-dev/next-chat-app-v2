@@ -12,7 +12,7 @@ import GroupIcon from '@/icons/groupIcon';
 
 const Home = memo(function HomeMemo() {
   const { authUser } = useAuthUser();
-  const { toPrivate, toGroup } = usePage();
+  
   // const { messageState, flashState } = useFlashMessage(10000);
 
   return (
