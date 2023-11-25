@@ -20,6 +20,8 @@ type Props = {
   endIcon?: ReactNode;
   header?: boolean;
   href?: Routes;
+  target?: '_blank' | '_top' | 'parent' | string;
+  rel?: 'noopener' | 'noreferrer' | string;
   testid?: string;
 };
 
@@ -38,6 +40,8 @@ const Button: FC<Props> = ({
   endIcon,
   header = false,
   href,
+  target,
+  rel,
   testid = '',
 }) => {
   const switchStyles = (variant: string) => {
@@ -77,39 +81,57 @@ const Button: FC<Props> = ({
   };
 
   return (
-    <button
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-      style={{
-        width: `${width}`,
-        height: `${height}`,
-        margin: `${margin}`,
-        // borderRadius: `${rounded ? "24px" : "6px"}`,
-      }}
-      className={[
-        switchStyles(variant),
-        switchBgColor(color),
-        switchWidth(fullWidth),
-        styles.button,
-        header ? styles.header : '',
-      ].join(' ')}
-      data-testid={testid}
-    >
+    <>
       {href ? (
-        <Link href={href} className={styles.buttonLink}>
+        <Link
+          style={{
+            width: `${width}`,
+            height: `${height}`,
+            margin: `${margin}`,
+          }}
+          className={[
+            switchStyles(variant),
+            switchBgColor(color),
+            switchWidth(fullWidth),
+            styles.button,
+            header ? styles.header : '',
+            styles.buttonLink,
+          ].join(' ')}
+          data-testid={testid}
+          href={href}
+          target={target}
+          rel={rel}
+        >
           {startIcon}
           {children}
           {endIcon}
         </Link>
       ) : (
-        <>
+        <button
+          type={type}
+          disabled={disabled}
+          onClick={onClick}
+          style={{
+            width: `${width}`,
+            height: `${height}`,
+            margin: `${margin}`,
+            // borderRadius: `${rounded ? "24px" : "6px"}`,
+          }}
+          className={[
+            switchStyles(variant),
+            switchBgColor(color),
+            switchWidth(fullWidth),
+            styles.button,
+            header ? styles.header : '',
+          ].join(' ')}
+          data-testid={testid}
+        >
           {startIcon}
           {children}
           {endIcon}
-        </>
+        </button>
       )}
-    </button>
+    </>
   );
 };
 

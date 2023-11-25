@@ -110,6 +110,7 @@ const Profile = memo(function ProfileMemo() {
           setState={setImage}
           header={false}
           profile
+          data-testid="profile-usericon"
         />
 
         {authUser?.displayName ? (
@@ -119,9 +120,10 @@ const Profile = memo(function ProfileMemo() {
             required
             ref={nameRef}
             defaultValue={authUser.displayName}
+            testid='profile-username'
           />
         ) : (
-          <Input label="Name" placeholder="Your Name" required ref={nameRef} />
+          <Input label="Name" placeholder="Your Name" required ref={nameRef} testid='profile-username' />
         )}
         <Button
           testid="upload-profile"

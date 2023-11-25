@@ -9,6 +9,7 @@ import Card from '@/components/card';
 // import FlashMessage from "@/components/flashMessage";
 import PrivateIcon from '@/icons/privateIcon';
 import GroupIcon from '@/icons/groupIcon';
+import {AuthLayout} from "@/components/authLayout";
 
 const Home = memo(function HomeMemo() {
   const { authUser } = useAuthUser();
@@ -16,7 +17,7 @@ const Home = memo(function HomeMemo() {
   // const { messageState, flashState } = useFlashMessage(10000);
 
   return (
-    <>
+    <AuthLayout>
       {/* {flashState && <FlashMessage {...messageState!} />} */}
       <div className={styles.cardContainer}>
         <Card
@@ -34,7 +35,7 @@ const Home = memo(function HomeMemo() {
           Group Chat
         </Card>
       </div>
-    </>
+    </AuthLayout>
   );
 });
 
