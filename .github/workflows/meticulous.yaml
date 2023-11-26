@@ -26,6 +26,18 @@ permissions:
   pull-requests: write
   statuses: write
 
+env:
+  NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+  NEXT_PUBLIC_FIREBASE_DATABASE: ${{ secrets.NEXT_PUBLIC_FIREBASE_DATABASE }}
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+  NEXT_PUBLIC_FIREBASE_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_ID }}
+  NEXT_PUBLIC_FIREBASE_MEASURMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASURMENT_ID }}
+  NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID }}
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+  METICULOUS_PROJECT_ID: ${{ secrets.METICULOUS_PROJECT_ID }}
+  METICULOUS_SCRIPT: ${{ secrets.METICULOUS_SCRIPT }}
+
 jobs:
   test:
     name: Report diffs
@@ -77,6 +89,6 @@ jobs:
       - name: Run Meticulous tests
         uses: alwaysmeticulous/report-diffs-action@v1
         with:
-          api-token: ${{ secrets.METICULOUS_API_TOKEN }}
+          METICULOUS_API_TOKEN: api-token: ${{ secrets.METICULOUS_API_TOKEN }}
           # TODO: Update the port and protocol below to match your app's frontend
           app-url: 'http://localhost:3000/'
