@@ -10,10 +10,11 @@ type Props = {
   required?: boolean;
   ref?: RefObject<HTMLInputElement>;
   defaultValue?: string;
+  testid?: string
 };
 
 const Input = forwardRef<HTMLInputElement, Props>(function InputForwardRef(
-  { type = "text", placeholder, label, required = true, defaultValue },
+  { type = "text", placeholder, label, required = true, defaultValue, testid },
   ref
 ) {
   return (
@@ -27,6 +28,7 @@ const Input = forwardRef<HTMLInputElement, Props>(function InputForwardRef(
         required={required}
         ref={ref}
         defaultValue={defaultValue}
+        data-testid={testid}
       />
     </label>
   );

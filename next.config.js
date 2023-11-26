@@ -1,26 +1,24 @@
 /** @type {import('next').NextConfig} */
 
-const withInterceptStdut = require('next-intercept-stdout');
-
-const nextConfig = withInterceptStdut(
-  {
-    async redirects() {
-      return [
-        {
-          source: '/',
-          destination: '/start',
-          permanent: true,
-        },
-      ];
-    },
-    reactStrictMode: true,
-    swcMinify: true,
-    images: {
-      domains: ['firebasestorage.googleapis.com'],
-    },
-    staticPageGenerationTimeout: 2000,
+const nextConfig = {
+  compiler: {
+    reactRemoveProperties: process.env.NODE_ENV === 'production' ? { properties: ['^data-testid$'] } : false,
   },
-  (text) => (text.includes('Duplicate atom key') ? '' : text)
-);
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/start',
+        permanent: true,
+      },
+    ];
+  },
+  reactStrictMode: true,
+  swcMinify: true,
+  images: {
+    domains: ['firebasestorage.googleapis.com'],
+  },
+  staticPageGenerationTimeout: 2000,
+};
 
 module.exports = nextConfig;

@@ -10,6 +10,7 @@ import SignUpIcon from '@/icons/signUpIcon';
 import SignInIcon from '@/icons/signInIcon';
 import CheckInIcon from '@/icons/checkInIcon';
 import { PageParam } from '@/types/PageParam';
+import { AuthLayout } from '@/components/authLayout';
 
 import styles from '@/styles/pages/Regist.module.scss';
 
@@ -52,26 +53,16 @@ const Regist: FC<Props> = memo(function RegistMemo({ params }) {
   }, [params?.uid, toUser]);
 
   return (
-    <>
-      <Form
-        title="Sign Up"
-        onSubmit={onSubmit}
-        startIcon={<SignUpIcon title />}
-        testid="regist-form"
-      >
-        <Input
-          label="Email"
-          type="email"
-          placeholder="Email"
-          required
-          ref={emailRef}
-        />
+    <AuthLayout>
+      <Form title="Sign Up" onSubmit={onSubmit} startIcon={<SignUpIcon title />} testid="register-form">
+        <Input label="Email" type="email" placeholder="Email" required ref={emailRef} testid="email_register-form" />
         <Input
           label="Password"
           type="password"
           placeholder="Password"
           required
           ref={passwordRef}
+          testid="password_register-form"
         />
         <Input
           label="Password Confirmation"
@@ -79,6 +70,7 @@ const Regist: FC<Props> = memo(function RegistMemo({ params }) {
           placeholder="Password Confirmation"
           required
           ref={passwordConfirmationRef}
+          testid="password-confirmation_register-form"
         />
         <Button
           type="submit"
@@ -89,21 +81,17 @@ const Regist: FC<Props> = memo(function RegistMemo({ params }) {
           margin="20px 0 0"
           startIcon={<CheckInIcon />}
           disabled={loading}
+          testid="register-button"
         >
           Sign Up
         </Button>
         <div className={styles.buttonGroup}>
-          <Button
-            type="button"
-            color="transparent"
-            startIcon={<SignInIcon />}
-            href="/login"
-          >
+          <Button type="button" color="transparent" startIcon={<SignInIcon />} href="/login">
             Sign In
           </Button>
         </div>
       </Form>
-    </>
+    </AuthLayout>
   );
 });
 

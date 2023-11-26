@@ -1,4 +1,5 @@
-import React, { FC, memo, ReactNode, useTransition, useMemo } from 'react';
+'use client';
+import React, { FC, memo, ReactNode, useMemo } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
@@ -20,21 +21,17 @@ const Header: FC<Props> = memo(function HeaderMemo({ children }) {
   const { toProfile } = usePage();
   const pathname = usePathname();
   const authUser = useAuthUserStore((state) => state.authUser);
-  const [isPending] = useTransition();
   const { signOut, error, loading } = useSignOut();
-  const isLoginStyle = useMemo(
-    () => (authUser?.uid ? styles.login : styles.notLogin),
-    [authUser?.uid]
-  );
+  const isLoginStyle = useMemo(() => (authUser?.uid ? styles.login : styles.notLogin), [authUser?.uid]);
 
   return (
     <>
       {pathname !== '/start' && pathname !== '/' && (
         <header className={[styles.header, isLoginStyle].join(' ')}>
           <HeaderLogo />
-          {authUser && !isPending && (
+          {authUser && (
             <div className={styles.profile}>
-              <p>{authUser.displayName}</p>
+              <p data-testid="header-username">{authUser.displayName}</p>
               {authUser.photoURL ? (
                 <Image
                   src={authUser.photoURL}
@@ -43,6 +40,7 @@ const Header: FC<Props> = memo(function HeaderMemo({ children }) {
                   onClick={() => toProfile(authUser.uid)}
                   width={60}
                   height={60}
+                  data-testid="header-usericon"
                 />
               ) : (
                 <AccountCircleIcon
@@ -55,10 +53,11 @@ const Header: FC<Props> = memo(function HeaderMemo({ children }) {
                     },
                   }}
                   onClick={() => toProfile(authUser?.uid)}
+                  data-testid="header-usericon"
                 />
               )}
               <Button
-                testid="signout-btn"
+                testid="signout-button"
                 type="button"
                 variant="outlined"
                 color="primary"

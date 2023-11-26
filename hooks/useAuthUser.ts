@@ -5,11 +5,12 @@ import { auth } from "@/firebase";
 
 export const useAuthUser = () => {
   const { getState } = useAuthUserStore;
+  const authUser = useAuthUserStore(state => state.authUser)
+  const isLogin = useAuthUserStore(state => state.isLogin)
   const reducer = useAuthUserStore(state => state.reducer)
 
-  useEffect(() => {
-    const unsubscribe =
-      onAuthStateChanged(auth, (user) => {
+  useEffect(() => {    
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
           const { uid, email, displayName, photoURL } = user;
           const authUser = {
@@ -31,5 +32,5 @@ export const useAuthUser = () => {
     };
   }, [reducer]);
 
-  return getState();
+  return {authUser, isLogin};
 };
