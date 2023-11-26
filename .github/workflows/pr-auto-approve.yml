@@ -16,6 +16,8 @@ jobs:
     permissions:
       pull-requests: write
     steps:
+      - uses: actions/checkout
       - uses: hmarr/auto-approve-action@v3
         with:
           review-message: 'Auto approved automated PR'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
