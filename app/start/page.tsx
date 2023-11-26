@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { analytics } from '@/firebase';
 import Link from 'next/link';
 import ArrowTopRight from '@/icons/arrowTopRight';
+import { AuthLayout } from '@/components/authLayout';
 
 const Start = memo(function StartMemo() {
   const { toLogin, toRegist } = usePage();
@@ -18,61 +19,55 @@ const Start = memo(function StartMemo() {
   };
 
   return (
-    <div className={styles.container}>
-      <Image src={logo} alt="logo" className={styles.logo} priority />
-      <div className={styles.buttonGroup}>
+    <>
+      <div className={styles.container}>
+        <Image src={logo} alt="logo" className={styles.logo} priority />
+        <div className={styles.buttonGroup}>
+          <Button
+            testid="register-start"
+            type="button"
+            color="primary"
+            variant="contained"
+            rounded
+            onClick={() => {
+              removeHomeClass();
+            }}
+            height="50px"
+            width="150px"
+            href="/regist"
+          >
+            Get Started
+          </Button>
+          <Button
+            testid="signin-start"
+            type="button"
+            color="transparent"
+            variant="filled"
+            onClick={() => {
+              removeHomeClass();
+            }}
+            height="30px"
+            width="150px"
+            href="/login"
+          >
+            Sign In &gt;
+          </Button>
+        </div>
         <Button
-          testid="regist-start"
-          type="button"
-          color="primary"
-          variant="contained"
-          rounded
-          onClick={() => {
-            removeHomeClass();
-          }}
-          height="50px"
-          width="150px"
-          href="/regist"
-        >
-          Get Started
-        </Button>
-        <Button
-          testid="signin-start"
           type="button"
           color="transparent"
           variant="filled"
-          onClick={() => {
-            removeHomeClass();
-          }}
-          height="30px"
-          width="150px"
-          href="/login"
-        >
-          Sign In &gt;
-        </Button>
-      </div>
-      <Button
-        type="button"
-        color="transparent"
-        variant="filled"
-        height="60px"
-        width="250px"
-        endIcon={<ArrowTopRight />}
-      >
-        <Link
+          height="60px"
+          width="250px"
+          endIcon={<ArrowTopRight />}
           href={'https://chat-app-4a684.web.app/'}
           target="_blank"
           rel="noopner"
         >
-          <Image
-            src={reactLogo}
-            alt="React Chat App"
-            className={styles.reactLogo}
-            priority
-          />
-        </Link>
-      </Button>
-    </div>
+          <Image src={reactLogo} alt="React Chat App" className={styles.reactLogo} priority />
+        </Button>
+      </div>
+    </>
   );
 });
 

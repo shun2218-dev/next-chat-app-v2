@@ -62,9 +62,13 @@ const Join: FC<Props> = memo(function JoinMemo({ params }) {
             </li>
           ))
         ) : loading ? (
-          <li>...loading</li>
+          <li>
+            <div className='loader'>...loading</div>
+          </li>
         ) : (
-          <li>Not Found</li>
+          <li style={{width: "100%", height: "100%", textAlign: "center"}}>
+            <span>Not Found</span>
+          </li>
         )}
       </ul>
     </Form>

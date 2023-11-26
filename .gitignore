@@ -5,6 +5,16 @@
 /.pnp
 .pnp.js
 
+# yarn berry
+# https://github.com/yarnpkg/berry/issues/454#issuecomment-1411548086
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # testing
 /coverage
 
@@ -40,6 +50,13 @@ next-env.d.ts
 # turborepo
 .turbo
 
-# cypress
-cypress.dev.json
-cypress.dev.config.ts
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/tests/images/*
+
+# firebase
+firebase-serviceAccount.json
+firebase-serviceAccount-local.json

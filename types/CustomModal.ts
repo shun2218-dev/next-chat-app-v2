@@ -11,4 +11,5 @@ export type CustomModal = {
   setInviteIds?: Dispatch<SetStateAction<string[]>>;
   cancelId?: string;
   setCancelId?: Dispatch<SetStateAction<string>>;
+  isLoading?: boolean
 };

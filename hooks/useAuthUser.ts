@@ -5,32 +5,32 @@ import { auth } from "@/firebase";
 
 export const useAuthUser = () => {
   const { getState } = useAuthUserStore;
-  //   const login = useAuthUserStore((state) => state.login);
-  //   const logout = useAuthUserStore((state) => state.logout);
+  const authUser = useAuthUserStore(state => state.authUser)
+  const isLogin = useAuthUserStore(state => state.isLogin)
+  const reducer = useAuthUserStore(state => state.reducer)
 
-  useEffect(() => {
-    const unsubscribe =
-      // subscribe(
-      //   (state) => state.authUser,
-
-      onAuthStateChanged(auth, (user) => {
+  useEffect(() => {    
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
-          const { uid, email, displayName } = user;
+          const { uid, email, displayName, photoURL } = user;
           const authUser = {
             uid,
             email,
             displayName,
+            photoURL
           };
-          //   login(authUser);
+          reducer(authUser)
         } else {
-          //   logout();
+          reducer(null)
         }
+      },
+      () => {
+        console.error("Failed to check user state")
       });
-    // );
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [reducer]);
 
-  return getState();
+  return {authUser, isLogin};
 };

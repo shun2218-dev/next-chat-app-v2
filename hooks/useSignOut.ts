@@ -21,7 +21,7 @@ export function useSignOut() {
         router.push("/login");
       })
       .catch((e) => {
-        setError(e instanceof Error ? e : Error("unecpected error!"));
+        setError(e instanceof Error ? e : new Error("unecpected error!"));
       })
       .finally(() => {
         setLoading(false);

@@ -16,6 +16,7 @@
 @mixin disabledStyle($color) {
   &:disabled {
     color: rgba($color: darken($color, 20), $alpha: 0.5);
+    cursor: not-allowed;
     @content;
   }
 }

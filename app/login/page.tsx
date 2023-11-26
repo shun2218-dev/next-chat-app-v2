@@ -14,9 +14,10 @@ import { useSignIn } from '@/hooks/useSignIn';
 // import { useFlashMessage } from "@/hooks/useFlashMessage";
 
 import { useAuthUser } from '@/hooks/useAuthUser';
+import { AuthLayout } from '@/components/authLayout';
 
 const Login = memo(function LoginMemo() {
-  const { authUser } = useAuthUser();
+  const { authUser, isLogin } = useAuthUser();
   const { toUser } = usePage();
   const { signIn, loading, error } = useSignIn();
   const emailRef = useRef<HTMLInputElement>(null);
@@ -34,33 +35,23 @@ const Login = memo(function LoginMemo() {
   };
 
   useEffect(() => {
-    if (authUser) {
+    if (isLogin() && authUser !== null) {
       toUser(authUser.uid);
     }
   }, [authUser, toUser]);
 
   return (
-    <>
+    <AuthLayout>
       {/* {flashState && <FlashMessage {...messageState!} />} */}
-      <Form
-        title="Sign In"
-        onSubmit={onSubmit}
-        startIcon={<LockIcon title />}
-        testid="login-form"
-      >
-        <Input
-          label="Email"
-          type="email"
-          placeholder="Email"
-          required
-          ref={emailRef}
-        />
+      <Form title="Sign In" onSubmit={onSubmit} startIcon={<LockIcon title />} testid="login-form">
+        <Input label="Email" type="email" placeholder="Email" required ref={emailRef} testid="email_login-form" />
         <Input
           label="Password"
           type="password"
           placeholder="Password"
           required
           ref={passwordRef}
+          testid="password_login-form"
         />
         <Button
           type="submit"
@@ -71,24 +62,20 @@ const Login = memo(function LoginMemo() {
           margin="20px 0 0"
           startIcon={<SignInIcon />}
           disabled={loading}
+          testid={'signin-button'}
         >
           Sign In
         </Button>
         <div className={styles.buttonGroup}>
-          <Button type="button" color="transparent" href="/reset">
+          <Button type="button" color="transparent" href="/reset" testid="reset-password">
             Forgot Password
           </Button>
-          <Button
-            type="button"
-            color="transparent"
-            href="/regist"
-            testid="regist-login"
-          >
+          <Button type="button" color="transparent" href="/regist" testid="register-login">
             Create a New Account
           </Button>
         </div>
       </Form>
-    </>
+    </AuthLayout>
   );
 });
 

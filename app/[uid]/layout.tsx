@@ -1,5 +1,6 @@
 "use client";
 import React, { ReactNode } from "react";
+import {AuthLayout} from "@/components/authLayout";
 
 // const existUser = async (uid: string) => {
 //   const ids = await getUserIds();
@@ -8,5 +9,5 @@ import React, { ReactNode } from "react";
 // };
 
 export default function Authlayout({ children }: { children: ReactNode }) {
-  return <>{children}</>;
+  return <AuthLayout>{children}</AuthLayout>;
 }

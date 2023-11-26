@@ -1,4 +1,4 @@
-import { Caveat, Yuji_Mai } from "@next/font/google";
+import { Caveat, Yuji_Mai } from "next/font/google";
 
 export const caveat = Caveat({
   subsets: ["latin"],

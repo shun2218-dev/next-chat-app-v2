@@ -1,9 +1,7 @@
 import { NavigationState } from "@/types/NavigationState";
-// import { useNavigate } from "react-router-dom";
 import { useRouter } from "next/navigation";
 
 export const usePage = () => {
-  // const navigate = useNavigate();
   const router = useRouter();
 
   const toStart = () => {
