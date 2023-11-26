@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: '`%s | Next Chat App',
   },
   description: 'This is a application for chatting powered by Next.js.',
-  metadataBase: new URL(process.env.VERCEL_URL!),
+  metadataBase: new URL('https://next-chat-app-v2-gold.vercel.app'),
   openGraph: {
     title: {
       default: 'Next Chat App',
