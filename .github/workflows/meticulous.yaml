@@ -52,7 +52,7 @@ jobs:
       - name: Install dependencies
         run: |
           echo 'nodeLinker: "node-modules"' >> .yarnrc.yml
-          yarn install --frozen-lockfile --non-interactive
+          yarn install
 
       - name: Build project
         run: |
