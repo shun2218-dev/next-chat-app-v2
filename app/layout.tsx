@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     },
     description: 'This is a application for chatting powered by Next.js.',
     images: 'opengraph-image.png',
+    url: 'https://next-chat-app-v2-gold.vercel.app',
   },
   twitter: {
     title: {
@@ -29,6 +30,14 @@ export const metadata: Metadata = {
     description: 'This is a application for chatting powered by Next.js.',
     card: 'summary_large_image',
     images: 'twitter-image.png',
+  },
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
   },
 };
 
