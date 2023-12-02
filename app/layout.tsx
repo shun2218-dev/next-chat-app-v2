@@ -36,10 +36,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        {
+        {process.env.NODE_ENV !== 'production' && (
           // eslint-disable-next-line @next/next/no-sync-scripts
           <script data-project-id={process.env.METICULOUS_PROJECT_ID!} src={process.env.METICULOUS_SCRIPT} />
-        }
+        )}
       </head>
       <body>
         <Suspense
