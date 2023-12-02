@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import '@/styles/fonts/soLovely.css';
 import '@/styles/globals.scss';
+import { Analytics } from '@vercel/analytics/react';
 
 import Header from '@/components/header';
 
@@ -35,10 +36,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        {
+        {process.env.NODE_ENV !== 'production' && (
           // eslint-disable-next-line @next/next/no-sync-scripts
           <script data-project-id={process.env.METICULOUS_PROJECT_ID!} src={process.env.METICULOUS_SCRIPT} />
-        }
+        )}
       </head>
       <body>
         <Suspense
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </Suspense>
         </Suspense>
+        <Analytics />
       </body>
     </html>
   );
