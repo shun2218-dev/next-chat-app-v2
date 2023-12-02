@@ -21,7 +21,7 @@ test.describe('Routing tests before authenticated', () => {
   test('register page', async ({ page }) => {
     await expect(page.getByTestId('register-start')).toBeVisible();
     await page.getByTestId('register-start').click();
-    await page.waitForURL('http://localhost:3000/regist');
+    await page.waitForURL('http://localhost:3000/register');
     await expect(page.getByTestId('register-form')).toBeVisible();
     await page.screenshot({ path: 'tests/images/routing/register-page.png' });
   });

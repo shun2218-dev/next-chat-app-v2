@@ -12,13 +12,13 @@ import CheckInIcon from '@/icons/checkInIcon';
 import { PageParam } from '@/types/PageParam';
 import { AuthLayout } from '@/components/authLayout';
 
-import styles from '@/styles/pages/Regist.module.scss';
+import styles from '@/styles/pages/Register.module.scss';
 
 type Props = {
   params: PageParam;
 };
 
-const Regist: FC<Props> = memo(function RegistMemo({ params }) {
+const Register: FC<Props> = memo(function RegisterMemo({ params }) {
   const { toLogin, toUser } = usePage();
   const { signUp, loading, error } = useSignUp();
   const emailRef = useRef<HTMLInputElement>(null);
@@ -95,4 +95,4 @@ const Regist: FC<Props> = memo(function RegistMemo({ params }) {
   );
 });
 
-export default Regist;
+export default Register;

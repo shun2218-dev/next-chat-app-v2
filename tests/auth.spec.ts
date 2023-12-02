@@ -32,7 +32,7 @@ test.describe('Authentication test', () => {
   });
   test('siginUp and signIn', async ({ page, browserName }) => {
     await page.getByTestId('register-login').click();
-    await page.waitForURL('http://localhost:3000/regist');
+    await page.waitForURL('http://localhost:3000/register');
     await expect(page.getByTestId('register-form')).toBeVisible();
     // input form to sign up
     const RANDOM_NUMBER = Math.floor(Math.random() * 1000);
