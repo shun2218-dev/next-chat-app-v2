@@ -1,23 +1,10 @@
 'use client';
+import { AuthUser } from '@/types/AuthUser';
 import { User } from 'firebase/auth';
 import { create } from 'zustand';
-import {
-  subscribeWithSelector,
-  devtools,
-  persist,
-  createJSONStorage,
-} from 'zustand/middleware';
+import { subscribeWithSelector, devtools, persist, createJSONStorage } from 'zustand/middleware';
 
-type AuthUser = {
-  uid: string;
-  displayName: string | null;
-  email: string | null;
-  photoURL: string | null;
-};
-
-type Reducer = (
-  authUser: Pick<User, 'uid' | 'email' | 'displayName' | 'photoURL'> | null
-) => void;
+type Reducer = (authUser: AuthUser | null) => void;
 
 export type AuthUserState = {
   authUser: AuthUser | null;

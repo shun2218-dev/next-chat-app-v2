@@ -1,6 +1,5 @@
-import  { useState, useEffect, FC, memo } from 'react';
+import { useState, useEffect, FC, memo } from 'react';
 import { useSmoothScroll } from 'hooks/useSmoothScroll';
-import { useAuthUser } from '@/hooks/useAuthUser';
 import { Skeleton } from '@mui/material';
 import { formatTime } from '@/utils/formatTime';
 import { getUserInfo } from '@/utils/getUserInfo';
@@ -12,6 +11,7 @@ import InfoMessage from './infoMessage';
 
 import styles from '@/styles/components/ChatMessage.module.scss';
 import Image from 'next/image';
+import { useAuthUserStore } from '@/atoms/useAuthUserStore';
 
 type Info = {
   displayName: string;
@@ -30,7 +30,7 @@ const ChatMessage: FC<Message> = memo(function ChatMessage({
   isLastMessage,
   image,
 }) {
-  const { authUser } = useAuthUser();
+  const authUser = useAuthUserStore((state) => state.authUser);
   const [userInfo, setUserInfo] = useState<Info>({
     displayName: '',
     photoURL: '',
@@ -59,82 +59,46 @@ const ChatMessage: FC<Message> = memo(function ChatMessage({
   return (
     <>
       {info ? (
-        <InfoMessage
-          status={status!}
-          to={to!}
-          from={from}
-          isLastMessage={isLastMessage}
-        />
+        <InfoMessage status={status!} to={to!} from={from} isLastMessage={isLastMessage} />
       ) : from === authUser?.uid ? (
         <li className={[styles.message, styles.own].join(' ')} ref={chatRef}>
-          {
-            message !== "" && (
+          {message !== '' && (
             <div className={styles.text}>
               <p className={styles.bubble}>{message}</p>
-              {createdAt !== null && (
-                <p className={styles.time}>{formatTime(createdAt)}</p>
-              )}
+              {createdAt !== null && <p className={styles.time}>{formatTime(createdAt)}</p>}
             </div>
-            )
-          }
+          )}
           {image && (
             <div className={styles.chatImage}>
-              <Image
-                src={image}
-                alt=""
-                width={200}
-                height={150}
-                priority={true}
-                style={{objectFit: "cover"}}
-              />
-              {createdAt !== null && (
-              <p className={styles.time}>{formatTime(createdAt)}</p>
-              )}
+              <Image src={image} alt="" width={200} height={150} priority={true} style={{ objectFit: 'cover' }} />
+              {createdAt !== null && <p className={styles.time}>{formatTime(createdAt)}</p>}
             </div>
           )}
         </li>
       ) : (
-        <li
-          className={[styles.message, styles.partner].join(' ')}
-          ref={chatRef}
-        >
+        <li className={[styles.message, styles.partner].join(' ')} ref={chatRef}>
           <div className={styles.profile}>
             {userInfo.photoURL ? (
               <Avatar size={40} storageRef={userInfo.photoURL} chat />
             ) : (
               <AccountCircleIcon sx={{ width: '40px', height: '40px' }} />
             )}
-            <p>
-              {userInfo.displayName !== undefined
-                ? userInfo.displayName
-                : 'Unknown'}
-            </p>
+            <p>{userInfo.displayName !== undefined ? userInfo.displayName : 'Unknown'}</p>
           </div>
-          {
-            message !== "" && (
+          {message !== '' && (
             <div className={styles.text}>
               <p className={styles.bubble}>{message}</p>
               {createdAt !== null ? (
-              <p className={styles.time}>{formatTime(createdAt)}</p>
+                <p className={styles.time}>{formatTime(createdAt)}</p>
               ) : (
-              <Skeleton variant="text" width={40} height={24} />
+                <Skeleton variant="text" width={40} height={24} />
               )}
             </div>
-            )
-          }
+          )}
           {image && (
             <div className={styles.chatImage}>
-              <Image
-                src={image}
-                alt=""
-                width={250}
-                height={150}
-                priority={true}
-                style={{objectFit: "cover"}}
-              />
-              {createdAt !== null && (
-                <p className={styles.time}>{formatTime(createdAt)}</p>
-              )}
+              <Image src={image} alt="" width={250} height={150} priority={true} style={{ objectFit: 'cover' }} />
+              {createdAt !== null && <p className={styles.time}>{formatTime(createdAt)}</p>}
             </div>
           )}
         </li>

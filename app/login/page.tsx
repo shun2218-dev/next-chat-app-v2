@@ -13,11 +13,12 @@ import { usePage } from '@/hooks/usePage';
 import { useSignIn } from '@/hooks/useSignIn';
 // import { useFlashMessage } from "@/hooks/useFlashMessage";
 
-import { useAuthUser } from '@/hooks/useAuthUser';
 import { AuthLayout } from '@/components/authLayout';
+import { useAuthUserStore } from '@/atoms/useAuthUserStore';
 
 const Login = memo(function LoginMemo() {
-  const { authUser, isLogin } = useAuthUser();
+  const authUser = useAuthUserStore((state) => state.authUser);
+  const isLogin = useAuthUserStore((state) => state.isLogin);
   const { toUser } = usePage();
   const { signIn, loading, error } = useSignIn();
   const emailRef = useRef<HTMLInputElement>(null);
@@ -38,7 +39,7 @@ const Login = memo(function LoginMemo() {
     if (isLogin() && authUser !== null) {
       toUser(authUser.uid);
     }
-  }, [authUser, toUser]);
+  }, [authUser, isLogin, toUser]);
 
   return (
     <AuthLayout>

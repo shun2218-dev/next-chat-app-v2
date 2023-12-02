@@ -1,42 +1,25 @@
 'use client';
-import React, {
-  useState,
-  useEffect,
-  ReactNode,
-  FormEvent,
-  useTransition,
-} from 'react';
+import React, { useState, useEffect, ReactNode, FormEvent, useTransition } from 'react';
 import { PageParam } from '@/types/PageParam';
 import dynamic from 'next/dynamic';
 import { useChatMessage } from '@/hooks/useChatMessage';
 import styles from '@/styles/pages/Private.module.scss';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { useAuthUser } from '@/hooks/useAuthUser';
 import { uploadChatImage } from '@/utils/uploadChatImage';
+import { useAuthUserStore } from '@/atoms/useAuthUserStore';
 
-const MessageInput = dynamic(
-  async () => await import('@/components/messageInput')
-);
+const MessageInput = dynamic(async () => await import('@/components/messageInput'));
 const NotFoundIcon = dynamic(async () => await import('@/icons/notFoundIcon'));
 const UserList = dynamic(async () => await import('@/components/userList'));
 
-export default function GroupChatLayout({
-  params,
-  children,
-}: {
-  params: PageParam;
-  children: ReactNode;
-}) {
+export default function GroupChatLayout({ params, children }: { params: PageParam; children: ReactNode }) {
   const { uid, groupid } = params;
-  const { chatMessages, chatRoom, dataLoading, setLoading } = useChatMessage(
-    true,
-    params
-  );
+  const { chatMessages, chatRoom, dataLoading, setLoading } = useChatMessage(true, params);
   const [message, setMessage] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [notHistory, setNotHistory] = useState(false);
-  const { authUser } = useAuthUser();
+  const authUser = useAuthUserStore((state) => state.authUser);
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
