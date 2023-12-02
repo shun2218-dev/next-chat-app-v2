@@ -23,7 +23,7 @@ test.describe('should not have any automatically detectable WCAG A or AA violati
   });
   test('register page', async ({ page }) => {
     await page.getByTestId('register-start').click();
-    await page.waitForURL('http://localhost:3000/regist');
+    await page.waitForURL('http://localhost:3000/register');
     await expect(page.getByTestId('register-form')).toBeVisible();
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])

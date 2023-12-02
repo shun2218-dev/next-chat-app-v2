@@ -1,27 +1,27 @@
-import { NavigationState } from "@/types/NavigationState";
-import { useRouter } from "next/navigation";
+import { NavigationState } from '@/types/NavigationState';
+import { useRouter } from 'next/navigation';
 
 export const usePage = () => {
   const router = useRouter();
 
   const toStart = () => {
-    router.push("/");
+    router.push('/');
   };
 
   const toLogin = () => {
-    router.push("/login");
+    router.push('/login');
   };
 
-  const toRegist = () => {
-    router.push("/regist");
+  const toRegister = () => {
+    router.push('/register');
   };
 
   const toReset = () => {
-    router.push("/reset");
+    router.push('/reset');
   };
 
   const toComplete = (state: NavigationState) => {
-    router.push("/reset/complete"); //query: { ...state }
+    router.push('/reset/complete'); //query: { ...state }
   };
 
   const toProfile = (uid: string, state?: NavigationState) => {
@@ -60,11 +60,7 @@ export const usePage = () => {
     router.push(`/${uid}/group`);
   };
 
-  const toGroupRoom = (
-    uid: string,
-    groupid: string,
-    state?: NavigationState
-  ) => {
+  const toGroupRoom = (uid: string, groupid: string, state?: NavigationState) => {
     router.push(`/${uid}/group/${groupid}`); // query: { ...state }
   };
 
@@ -77,13 +73,13 @@ export const usePage = () => {
   };
 
   const toRedirect = (state: NavigationState) => {
-    router.push("."); // , query: { replace: true, ...state }
+    router.push('.'); // , query: { replace: true, ...state }
   };
 
   return {
     toStart,
     toLogin,
-    toRegist,
+    toRegister,
     toReset,
     toComplete,
     toProfile,

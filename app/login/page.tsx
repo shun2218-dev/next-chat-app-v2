@@ -71,7 +71,7 @@ const Login = memo(function LoginMemo() {
           <Button type="button" color="transparent" href="/reset" testid="reset-password">
             Forgot Password
           </Button>
-          <Button type="button" color="transparent" href="/regist" testid="register-login">
+          <Button type="button" color="transparent" href="/register" testid="register-login">
             Create a New Account
           </Button>
         </div>
