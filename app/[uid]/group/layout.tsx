@@ -7,7 +7,7 @@ type Props = {
 };
 
 const GroupLayout: FC<Props> = ({ children }) => {
-  return <AuthLayout>{children}</AuthLayout>;
+  return <>{children}</>;
 };
 
 export default GroupLayout;
