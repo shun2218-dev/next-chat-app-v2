@@ -1,19 +1,10 @@
-import React, {
-  FC,
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  CSSProperties,
-  useEffect,
-  useState,
-  useMemo,
-} from "react";
-import Image from "next/image";
-import { useAuthUser } from "@/hooks/useAuthUser";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Skeleton } from "@mui/material";
-import styles from "@/styles/components/Avatar.module.scss";
-import Link from "next/link";
+import React, { FC, ChangeEvent, Dispatch, SetStateAction, CSSProperties, useEffect, useState, useMemo } from 'react';
+import Image from 'next/image';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Skeleton } from '@mui/material';
+import styles from '@/styles/components/Avatar.module.scss';
+import Link from 'next/link';
+import { useAuthUserStore } from '@/atoms/useAuthUserStore';
 
 type Props = {
   size?: number;
@@ -34,20 +25,17 @@ const Avatar: FC<Props> = ({
   storageRef,
   profile = false,
 }) => {
-  const { authUser } = useAuthUser();
+  const authUser = useAuthUserStore((state) => state.authUser);
   const [url, setUrl] = useState<string | null>(null);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (setState) {
       if (e.target.files !== null) {
-        setUrl("");
+        setUrl('');
         setState(e.target.files[0]);
       }
     }
   };
-  const avatarImageClasses = useMemo(
-    () => [styles.avatar, profile && styles.profile].join(" "),
-    [profile]
-  );
+  const avatarImageClasses = useMemo(() => [styles.avatar, profile && styles.profile].join(' '), [profile]);
 
   useEffect(() => {
     if (storageRef) {
@@ -64,8 +52,8 @@ const Avatar: FC<Props> = ({
   const imageStyle = {
     width: size,
     height: size,
-    borderRadius: "50%",
-    objectFit: "cover",
+    borderRadius: '50%',
+    objectFit: 'cover',
   } as CSSProperties;
 
   const AvatarImage = () => {
@@ -77,7 +65,7 @@ const Avatar: FC<Props> = ({
               src={storageRef}
               alt=""
               style={imageStyle}
-              className={[styles.avatar, profile && styles.profile].join(" ")}
+              className={[styles.avatar, profile && styles.profile].join(' ')}
               width={60}
               height={60}
             />
@@ -97,24 +85,10 @@ const Avatar: FC<Props> = ({
         ) : url !== null ? (
           header ? (
             <Link href={`/${authUser?.uid}/profile`}>
-              <Image
-                src={url}
-                alt=""
-                style={imageStyle}
-                className={avatarImageClasses}
-                width={60}
-                height={60}
-              />
+              <Image src={url} alt="" style={imageStyle} className={avatarImageClasses} width={60} height={60} />
             </Link>
           ) : (
-            <Image
-              src={url}
-              alt=""
-              style={imageStyle}
-              className={avatarImageClasses}
-              width={60}
-              height={60}
-            />
+            <Image src={url} alt="" style={imageStyle} className={avatarImageClasses} width={60} height={60} />
           )
         ) : (
           <AccountCircleIcon sx={{ width: size, height: size }} />
@@ -130,13 +104,7 @@ const Avatar: FC<Props> = ({
         <AvatarImage />
       </label>
       {!header && !chat && (
-        <input
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          id="avatar"
-          onChange={handleChange}
-        />
+        <input type="file" accept="image/*" style={{ display: 'none' }} id="avatar" onChange={handleChange} />
       )}
     </div>
   );

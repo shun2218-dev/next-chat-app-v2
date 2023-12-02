@@ -4,7 +4,6 @@ import { usePage } from '@/hooks/usePage';
 import { auth, db, storage } from '@/firebase';
 import { updateProfile } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { useAuthUser } from '@/hooks/useAuthUser';
 import { doc, updateDoc } from 'firebase/firestore';
 
 import Avatar from '@/components/avatar';
@@ -19,18 +18,14 @@ import { useAuthUserStore } from '@/atoms/useAuthUserStore';
 
 const Profile = memo(function ProfileMemo() {
   const { toHome } = usePage();
-  const { authUser } = useAuthUser();
+  const authUser = useAuthUserStore((state) => state.authUser);
   const { setState } = useAuthUserStore;
   // const { flashState, messageState } = useFlashMessage(10000);
   const [image, setImage] = useState<File | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
 
-  const updateUserProfile = async (
-    uid: string,
-    displayName: string,
-    photoURL: string
-  ) => {
+  const updateUserProfile = async (uid: string, displayName: string, photoURL: string) => {
     const userRef = doc(db, 'users', uid);
     await updateDoc(userRef, { displayName, photoURL });
   };
@@ -76,9 +71,7 @@ const Profile = memo(function ProfileMemo() {
           };
           setState({ authUser: _authUser });
         })
-        .then(
-          async () => await updateUserProfile(uid, name, authUser.photoURL!)
-        )
+        .then(async () => await updateUserProfile(uid, name, authUser.photoURL!))
         .then(() =>
           toHome(uid, {
             title: 'Success',
@@ -88,9 +81,7 @@ const Profile = memo(function ProfileMemo() {
         )
         .finally(() => setLoading(false));
     } else {
-      alert(
-        'User name and Profile image is a required contents to start chatting'
-      );
+      alert('User name and Profile image is a required contents to start chatting');
       setLoading(false);
     }
   };
@@ -98,20 +89,8 @@ const Profile = memo(function ProfileMemo() {
   return (
     <>
       {/* {flashState && <FlashMessage {...messageState!} />} */}
-      <Form
-        testid="profile-form"
-        title="Setting Profile"
-        onSubmit={onSubmit}
-        startIcon={<SettingIcon title />}
-      >
-        <Avatar
-          size={60}
-          state={image}
-          setState={setImage}
-          header={false}
-          profile
-          data-testid="profile-usericon"
-        />
+      <Form testid="profile-form" title="Setting Profile" onSubmit={onSubmit} startIcon={<SettingIcon title />}>
+        <Avatar size={60} state={image} setState={setImage} header={false} profile data-testid="profile-usericon" />
 
         {authUser?.displayName ? (
           <Input
@@ -120,10 +99,10 @@ const Profile = memo(function ProfileMemo() {
             required
             ref={nameRef}
             defaultValue={authUser.displayName}
-            testid='profile-username'
+            testid="profile-username"
           />
         ) : (
-          <Input label="Name" placeholder="Your Name" required ref={nameRef} testid='profile-username' />
+          <Input label="Name" placeholder="Your Name" required ref={nameRef} testid="profile-username" />
         )}
         <Button
           testid="upload-profile"

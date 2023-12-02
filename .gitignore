@@ -58,5 +58,4 @@ next-env.d.ts
 /tests/images/*
 
 # firebase
-firebase-serviceAccount.json
-firebase-serviceAccount-local.json
+serviceAccountKey.json
