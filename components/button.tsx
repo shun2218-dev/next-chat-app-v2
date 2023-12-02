@@ -2,7 +2,7 @@ import React, { FC, ReactNode, useMemo } from 'react';
 import styles from '@/styles/components/Button.module.scss';
 import Link from 'next/link';
 
-type Routes = '/start' | '/login' | '/regist' | '/reset' | string;
+type Routes = '/start' | '/login' | '/register' | '/reset' | string;
 
 type Props = {
   type: 'button' | 'submit' | 'reset';

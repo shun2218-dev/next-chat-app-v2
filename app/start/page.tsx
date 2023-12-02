@@ -12,7 +12,7 @@ import ArrowTopRight from '@/icons/arrowTopRight';
 import { AuthLayout } from '@/components/authLayout';
 
 const Start = memo(function StartMemo() {
-  const { toLogin, toRegist } = usePage();
+  const { toLogin, toRegister } = usePage();
   const removeHomeClass = () => {
     document.body.classList.remove('home');
     document.body.classList.remove('pace-done');
@@ -34,7 +34,7 @@ const Start = memo(function StartMemo() {
             }}
             height="50px"
             width="150px"
-            href="/regist"
+            href="/register"
           >
             Get Started
           </Button>
