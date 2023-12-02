@@ -1,61 +1,49 @@
-import React, { FC, memo, useEffect, useState } from "react";
-import Image from "next/image";
-import { usePage } from "hooks/usePage";
-import { useAuthUser } from "@/hooks/useAuthUser";
-import { db } from "@/firebase";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  DocumentData,
-  getDoc,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
-import { getUserInfo } from "@/utils/getUserInfo";
-import { informationMessage } from "@/utils/infomationMessage";
-import { CustomModal } from "@/types/CustomModal";
+import React, { FC, memo, useEffect, useState } from 'react';
+import Image from 'next/image';
+import { usePage } from 'hooks/usePage';
+import { db } from '@/firebase';
+import { collection, deleteDoc, doc, DocumentData, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { getUserInfo } from '@/utils/getUserInfo';
+import { informationMessage } from '@/utils/infomationMessage';
+import { CustomModal } from '@/types/CustomModal';
 
-import Modal from "./modal";
-import Button from "./button";
+import Modal from './modal';
+import Button from './button';
 
-import styles from "@/styles/components/Modal.module.scss";
-import utilStyles from "@/styles/utils/utils.module.scss";
+import styles from '@/styles/components/Modal.module.scss';
+import utilStyles from '@/styles/utils/utils.module.scss';
+import { useAuthUserStore } from '@/atoms/useAuthUserStore';
 
-const JoinModal: FC<CustomModal> = memo(function JoinModalMemo({
-  params,
-  open,
-  modalToggle,
-}) {
-  const { authUser } = useAuthUser();
+const JoinModal: FC<CustomModal> = memo(function JoinModalMemo({ params, open, modalToggle }) {
+  const authUser = useAuthUserStore((state) => state.authUser);
   const { uid, groupid } = params;
   const { toJoin } = usePage();
   const [groupInfo, setGroupInfo] = useState<DocumentData>({});
   const [profileEmpty, setProfileEmpty] = useState(false);
 
   const invitationCheck = async (uid: string, groupid: string) => {
-    const inviteRef = collection(db, "groups", groupid, "invitations");
+    const inviteRef = collection(db, 'groups', groupid, 'invitations');
     await getDocs(inviteRef).then(async (snapshot) => {
       const ids = snapshot.docs.map((doc) => doc.id);
       if (ids.includes(uid)) {
-        const targetRef = doc(db, "groups", groupid, "invitations", uid);
+        const targetRef = doc(db, 'groups', groupid, 'invitations', uid);
         await deleteDoc(targetRef);
       }
     });
   };
   const joinGroup = async (groupid: string, uid: string) => {
-    const membersRef = doc(db, "groups", groupid, "members", uid);
+    const membersRef = doc(db, 'groups', groupid, 'members', uid);
     await getUserInfo(uid)
       .then(async (member) => {
         await setDoc(membersRef, member)
           .then(async () => {
-            await informationMessage(uid, groupid, "joined");
+            await informationMessage(uid, groupid, 'joined');
           })
           .then(async () => {
             await invitationCheck(uid!, groupid!);
           });
       })
-      .finally(() => modalToggle("join"));
+      .finally(() => modalToggle('join'));
   };
 
   useEffect(() => {
@@ -68,7 +56,7 @@ const JoinModal: FC<CustomModal> = memo(function JoinModalMemo({
 
   useEffect(() => {
     if (groupid) {
-      const groupRef = doc(db, "groups", groupid);
+      const groupRef = doc(db, 'groups', groupid);
       getDoc(groupRef).then((docSnapshot) => {
         if (docSnapshot.exists()) {
           setGroupInfo({ ...docSnapshot.data() });
@@ -86,7 +74,7 @@ const JoinModal: FC<CustomModal> = memo(function JoinModalMemo({
               alt="profile image"
               width={60}
               height={60}
-              className={[utilStyles.avatar, styles.groupImage].join(" ")}
+              className={[utilStyles.avatar, styles.groupImage].join(' ')}
             />
             <div>
               <p className={styles.contentTitle}>Group name</p>
@@ -98,7 +86,7 @@ const JoinModal: FC<CustomModal> = memo(function JoinModalMemo({
             </div>
           </>
         )}
-        <div className={[styles.modalButton, styles.row].join(" ")}>
+        <div className={[styles.modalButton, styles.row].join(' ')}>
           <Button
             type="button"
             color="primary"
@@ -109,13 +97,7 @@ const JoinModal: FC<CustomModal> = memo(function JoinModalMemo({
           >
             Yes
           </Button>
-          <Button
-            type="button"
-            color="transparent"
-            variant="outlined"
-            onClick={() => toJoin(uid!)}
-            fullWidth
-          >
+          <Button type="button" color="transparent" variant="outlined" onClick={() => toJoin(uid!)} fullWidth>
             No
           </Button>
         </div>
