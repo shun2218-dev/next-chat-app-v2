@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import '@/styles/fonts/soLovely.css';
 import '@/styles/globals.scss';
+import { Analytics } from '@vercel/analytics/react';
 
 import Header from '@/components/header';
 
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </Suspense>
         </Suspense>
+        <Analytics />
       </body>
     </html>
   );
